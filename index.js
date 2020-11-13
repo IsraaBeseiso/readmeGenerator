@@ -3,22 +3,8 @@ const inquirer = require("inquirer");
 const axios = require("axios");
 const fs = require('fs');
 const path = require('path');
-async function main(){
-    console.log(`starting`);
-    const userResponse = await inquirer
-    .prompt([const inquirer = require("inquirer");
-    const axios = require("axios");
-    const fs = require('fs');
-    const path = require('path');
-    async function main(){
-        console.log(`starting`);
-        const userResponse = await inquirer
-        .prompt([
-
-// function to write README file
-      (fileName, data) => {
-      }
-  // questions to user using "inquirer"
+const generateMarkdown = require('./utils/generateMarkdown');
+const questions = [
   {
     type: "input",
     message: "What is your GitHub user name?",
@@ -67,36 +53,29 @@ async function main(){
     message:
       "please enter git hub user names of the contributor if any (If there are mulitple contributor, seperate names with comma and no space! )",
     name: "contributors",
-    default: " Robert McKenney, Abdul Amoud and Igor Calvacante"
+    default: "israa beseiso",
   },
-
   {
     type: "input",
     message: "Provide examples on how to run tests.",
     name: "test",
     default: "Insert your tests sample here..."
   }
-];
+]
 //answers.username
 
 // function to initialize program
 function init() {
-  inquirer.prompt(questions).then(answers => {
-    console.log(answers);
-    axios
-      .get("https://api.github.com/users/" + answers.username)
-      .then(response => {
-        console.log(response);
-        var imageURL = response.data.avatar_url;
-        answers.image = imageURL;
-        console.log(imageURL);
-        fs.writeFile("README.md", generateMarkdown(answers), function(err) {
+  inquirer.prompt(questions).then(response => {
+    console.log(response);
+   
+        fs.writeFile("PRACTICE.md", generateMarkdown(response), function(err) {
           if (err) {
             throw err;
           }
         });
-      });
-  });
+     
+  }).catch(err=>console.log(err));
 }
 
 init();
